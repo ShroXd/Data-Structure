@@ -12,7 +12,7 @@ template <class T>
 class chainList
 {
     template <class U>
-    friend ostream &operator<<(ostream &out, const chainList<T> &);
+    friend ostream &operator<<(ostream &out, const chainList<U> &);
 
 public:
     chainList(int initialSize = 10);
@@ -35,9 +35,9 @@ public:
     void insert(int theIndex, const T &theElement);
 
 private:
-    void checkIndex(int theIndex);
+    void checkIndex(int theIndex) const;
     void checkInitialSize(int initialSize);
-    chainNode<T> *jump2TheIndex(int theIndex);
+    chainNode<T> *jump2TheIndex(int theIndex) const;
 
     chainNode<T> *firstNode;
     int listSize;
@@ -51,7 +51,7 @@ ostream &operator<<(ostream &out, const chainList<T> &chain)
 
     while (currentNode != NULL)
     {
-        out << currentNode->element;
+        out << currentNode->element << "-";
         currentNode = currentNode->next;
     }
 
@@ -60,10 +60,10 @@ ostream &operator<<(ostream &out, const chainList<T> &chain)
 }
 
 template <class T>
-chainNode<T>* chainList<T>::jump2TheIndex(int theIndex)
+chainNode<T> *chainList<T>::jump2TheIndex(int theIndex) const
 {
-    chainNode<T>* p = firstNode;
-    for (int i = 0; i < theIndex - 1; i++)
+    chainNode<T> *p = firstNode;
+    for (int i = 0; i < theIndex; i++)
     {
         p = p->next;
     }
@@ -72,7 +72,7 @@ chainNode<T>* chainList<T>::jump2TheIndex(int theIndex)
 }
 
 template <class T>
-void chainList<T>::checkIndex(int theIndex)
+void chainList<T>::checkIndex(int theIndex) const
 {
     if (theIndex < 0)
     {
@@ -139,13 +139,7 @@ template <class T>
 T &chainList<T>::get(int theIndex) const
 {
     checkIndex(theIndex);
-
-    chainNode<T> *currentNode;
-    currentNode = firstNode;
-    for (int i = 1; i < theIndex; i++)
-    {
-        currentNode = currentNode->next;
-    }
+    chainNode<T> *currentNode = jump2TheIndex(theIndex);
 
     return currentNode->element;
 }
@@ -161,6 +155,7 @@ int chainList<T>::indexOf(const T &theElement) const
         if (currentNode->element == theElement)
         {
             theIndex = i;
+            break;
         }
         else
         {
@@ -177,18 +172,21 @@ void chainList<T>::erase(int theIndex)
 {
     checkIndex(theIndex);
 
-    chainNode<T> *currentNode;
-    currentNode = firstNode;
-    for (int i = 0; i < theIndex - 1; i++)
+    chainNode<T> *temp;
+    if (theIndex == 0)
     {
-        currentNode = currentNode->next;
+        temp = firstNode;
+        firstNode = firstNode->next;
+    }
+    else
+    {
+        chainNode<T> *preNode = jump2TheIndex(theIndex - 1);
+        temp = preNode->next;
+        preNode->next = temp->next;
     }
 
-    chainNode<T> *temp = currentNode->next;
-    currentNode->next = temp->next;
     delete temp;
-
-    --listSize;
+    listSize--;
 }
 
 template <class T>
@@ -196,16 +194,17 @@ void chainList<T>::insert(int theIndex, const T &theElement)
 {
     checkIndex(theIndex);
 
-    chainNode<T> *currentNode;
-    currentNode = firstNode;
-    for (int i = 0; i < theIndex - 1; i++)
+    if (theIndex == 0)
     {
-        currentNode = currentNode->next;
+        firstNode = new chainNode<T>(theElement, firstNode);
+    }
+    else
+    {
+        chainNode<T> *preNode = jump2TheIndex(theIndex - 1);
+        preNode->next = new chainNode<T>(theElement, preNode->next);
     }
 
-    chainNode<T> newNode = new chainNode<T>(theElement);
-    currentNode->next = newNode;
-    newNode.next = currentNode->next;
+    listSize++;
 }
 
 #endif
