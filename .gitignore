@@ -4,6 +4,7 @@
 Info.plist
 
 linearListTest
+chainList
 test
 
 test.cpp

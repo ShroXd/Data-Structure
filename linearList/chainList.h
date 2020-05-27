@@ -9,56 +9,83 @@
 using namespace std;
 
 template <class T>
-class chainList : public linearList<T>
+class chainList
 {
     template <class U>
-    friend ostream &operator<<(ostream &out, chainList<U> &);
+    friend ostream &operator<<(ostream &out, const chainList<T> &);
 
 public:
     chainList(int initialSize = 10);
     chainList(const chainList<T> &);
-    ~chainList()
-    {
-        delete[] element;
-    }
+    ~chainList();
 
     bool empty() const
     {
         return listSize == 0;
-    }
+    };
     int size() const
     {
         return listSize;
-    }
+    };
 
-    T& get(int theIndex) const;
-    int indexOf(const T& theElement) const;
+    int indexOf(const T &theElement) const;
+    T &get(int theIndex) const;
+
     void erase(int theIndex);
-    void insert(int theIndex, const T& theElement);
+    void insert(int theIndex, const T &theElement);
 
 private:
-    void checkIndex(int theIndex) const;
-    void checkInitialSize(int theInitialSize) const;
+    void checkIndex(int theIndex);
+    void checkInitialSize(int initialSize);
+    chainNode<T> *jump2TheIndex(int theIndex);
 
-    chainNode<T>* firstNode;    // 指向链表第一个元素的指针
+    chainNode<T> *firstNode;
     int listSize;
 };
 
 template <class T>
-void chainList<T>::checkInitialSize(int theInitialSize) const
+ostream &operator<<(ostream &out, const chainList<T> &chain)
 {
-    if (theInitialSize < 0)
+    out << "The chain list is: ";
+    chainNode<T> *currentNode = chain.firstNode;
+
+    while (currentNode != NULL)
     {
-        throw illegalParameterValue("The initial size of list must be > 0");
+        out << currentNode->element;
+        currentNode = currentNode->next;
+    }
+
+    out << endl;
+    return out;
+}
+
+template <class T>
+chainNode<T>* chainList<T>::jump2TheIndex(int theIndex)
+{
+    chainNode<T>* p = firstNode;
+    for (int i = 0; i < theIndex - 1; i++)
+    {
+        p = p->next;
+    }
+
+    return p;
+}
+
+template <class T>
+void chainList<T>::checkIndex(int theIndex)
+{
+    if (theIndex < 0)
+    {
+        throw illegalParameterValue("the index of list must be > 0");
     }
 }
 
 template <class T>
-void chainList<T>::checkIndex(int theIndex) const
+void chainList<T>::checkInitialSize(int initialSize)
 {
-    if (theIndex < 0 || theIndex > listSize)
+    if (initialSize < 1)
     {
-        throw illegalParameterValue("The index must in [0, listSize]");
+        throw illegalParameterValue("the initialSize of list must be > 0");
     }
 }
 
@@ -75,38 +102,110 @@ template <class T>
 chainList<T>::chainList(const chainList<T> &chain)
 {
     listSize = chain.listSize;
-    
-    if (lsitSize == 0)
+
+    if (listSize == 0)
     {
         firstNode = NULL;
         return;
     }
 
-    chainNode<T>* sourceNode = chain.firstNode;
+    chainNode<T> *sourceNode = chain.firstNode;
     firstNode = new chainNode<T>(sourceNode->element);
     sourceNode = sourceNode->next;
-    
-    // firstNode 指向的应当是链表的第一个元素，所以不能用这个指针来迭代
-    chainNode<T>* targetNode = firstNode;
+    chainNode<T> *targetNode = firstNode;
 
-    while(sourceNode != NULL)
+    while (sourceNode != NULL)
     {
-        targetNode->next = new chainNode<T>(sourceNode->element);
-        targetNode = sourceNode->next;
+        targetNode->next = new chainNode<T>(sourceNode->next);
+        targetNode = targetNode->next;
         sourceNode = sourceNode->next;
     }
+
     targetNode->next = NULL;
 }
 
 template <class T>
 chainList<T>::~chainList()
 {
-    while(firstNode != NULL)
+    while (firstNode != NULL)
     {
-        chainNode<T>* nextNode = firstNode->next;
+        chainNode<T> *nextNode = firstNode->next;
         delete firstNode;
         firstNode = nextNode;
     }
+}
+
+template <class T>
+T &chainList<T>::get(int theIndex) const
+{
+    checkIndex(theIndex);
+
+    chainNode<T> *currentNode;
+    currentNode = firstNode;
+    for (int i = 1; i < theIndex; i++)
+    {
+        currentNode = currentNode->next;
+    }
+
+    return currentNode->element;
+}
+
+template <class T>
+int chainList<T>::indexOf(const T &theElement) const
+{
+    int theIndex = 0;
+    chainNode<T> *currentNode;
+    currentNode = firstNode;
+    for (int i = 0; i < listSize; i++)
+    {
+        if (currentNode->element == theElement)
+        {
+            theIndex = i;
+        }
+        else
+        {
+            theIndex = -1;
+        }
+        currentNode = currentNode->next;
+    }
+
+    return theIndex;
+}
+
+template <class T>
+void chainList<T>::erase(int theIndex)
+{
+    checkIndex(theIndex);
+
+    chainNode<T> *currentNode;
+    currentNode = firstNode;
+    for (int i = 0; i < theIndex - 1; i++)
+    {
+        currentNode = currentNode->next;
+    }
+
+    chainNode<T> *temp = currentNode->next;
+    currentNode->next = temp->next;
+    delete temp;
+
+    --listSize;
+}
+
+template <class T>
+void chainList<T>::insert(int theIndex, const T &theElement)
+{
+    checkIndex(theIndex);
+
+    chainNode<T> *currentNode;
+    currentNode = firstNode;
+    for (int i = 0; i < theIndex - 1; i++)
+    {
+        currentNode = currentNode->next;
+    }
+
+    chainNode<T> newNode = new chainNode<T>(theElement);
+    currentNode->next = newNode;
+    newNode.next = currentNode->next;
 }
 
 #endif
