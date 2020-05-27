@@ -26,12 +26,13 @@ int main()
     myList.erase(1);
     cout << myList;
 
-    if (myList.indexOf(200) == -1)
+    int theIndex = 200;
+    if (myList.indexOf(theIndex) == -1)
     {
         cout << "未找到相关元素";
     }
     else
     {
-        cout << myList.indexOf(200);
+        cout << myList.indexOf(theIndex);
     }
 }
