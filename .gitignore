@@ -1,11 +1,7 @@
-.DS_Store
-.vscode
-
-Info.plist
-
-linearListTest
-chainListTest
-arrayStackTest
-test
-
-test.cpp
+# Ignore all
+*
+# Unignore all with extensions
+!*.cpp
+!*.h
+# Unignore all dirs
+!*/
