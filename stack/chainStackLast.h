@@ -1,5 +1,5 @@
-#ifndef chainStack_
-#define chainStack_
+#ifndef chainStackLast_
+#define chainStackLast_
 
 #include <iostream>
 #include "./stack.h"
