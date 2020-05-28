@@ -111,8 +111,10 @@ void arrayList<T>::erase(int theIndex)
     checkIndex(theIndex);
 
     copy(element + theIndex + 1, element + listSize, element + theIndex);
-    //? 这啥啊
-    element[--listSize].~T();
+    // 将 theIndex 后的元素向前复制移动一位
+    // 数组尾需要调用析构函数释放掉内存
+    //! 析构完成之后依旧能找到该元素
+    element[listSize--].~T();
 }
 
 template <class T>
@@ -134,7 +136,6 @@ void arrayList<T>::insert(int theIndex, const T &theElement)
 template <class T>
 ostream &operator<<(ostream &out, const arrayList<T> &s)
 {
-    cout << s.listSize << endl;
     for (int i = 0; i < s.listSize; i++)
     {
         cout << i << '-';
