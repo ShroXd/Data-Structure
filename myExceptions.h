@@ -20,4 +20,20 @@ private:
     string message;
 };
 
+class stackEmpty
+{
+public:
+    stackEmpty(string theMessage = "stack is empty")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
+
+private:
+    string message;
+};
+
 #endif

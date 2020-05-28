@@ -13,48 +13,67 @@ class arrayStack : public stack<T>
 {
 
     template <class U>
-    friend ostream &operator<<(ostream &out, arrayStack<T> stack);
+    friend ostream &operator<<(ostream &out, const arrayStack<U> &s);
 
 public:
     arrayStack(int initialSize = 10);
-    arrayStack(const arrayStack<T> &);
     ~arrayStack()
     {
-        delete[] element;
+        delete[] stack;
     }
     bool empty() const
     {
-        return listSize == 0;
+        return stackTop == -1;
     }
     int size() const
     {
-        return listSize;
+        return stackTop + 1;
     }
 
-    T &top() const;
-    void pop();
+    T &top()
+    {
+        if (stackTop == -1)
+        {
+            throw stackEmpty();
+        }
+
+        return stack[stackTop];
+    };
+    void pop()
+    {
+        if (stackTop == -1)
+        {
+            throw stackEmpty();
+        }
+
+        stack[stackTop--].~T();
+    };
     void push(const T &theElement);
 
 private:
     void checkIndex(const int theIndex);
     void checkInitialSize(const int initialSize);
 
-    int listSize;
-    int arraySize;
-    T *element;
+    int stackTop;
+    int arrayLength;
+    T *stack;
 };
 
 template <class T>
-ostream &operator<<(ostream &out, arrayStack<T> stack)
+ostream &operator<<(ostream &out, const arrayStack<T> &s)
 {
-
+    out << "The stack is: ";
+    for (int i = 0; i <= s.stackTop; i++)
+    {
+        out << s.stack[i] << '-';
+    }
     return out;
 }
 
 template <class T>
 void arrayStack<T>::checkIndex(const int theIndex)
 {
-    if (theIndex < 0 || theIndex > listSize)
+    if (theIndex < 0 || theIndex > stackTop)
     {
         throw illegalParameterValue("The index of stack must be in [0, listSize - 1]");
     }
@@ -74,36 +93,21 @@ arrayStack<T>::arrayStack(int initialSize)
 {
     checkInitialSize(initialSize);
 
-    listSize = 0;
-    arraySize = initialSize;
-    element = new T[initialSize];
-}
-
-template <class T>
-T &arrayStack<T>::top() const
-{
-
-    return element[-1];
-}
-
-template <class T>
-void arrayStack<T>::pop()
-{
-    // delete element[listSize - 1];
-
-    listSize--;
+    arrayLength = initialSize;
+    stack = new T[arrayLength];
+    stackTop = -1;
 }
 
 template <class T>
 void arrayStack<T>::push(const T &theElement)
 {
-    if (listSize == arraySize)
+    if (stackTop == arrayLength - 1)
     {
-        changeLength1D(element, arraySize, 2 * arraySize);
+        changeLength1D(stack, arrayLength, 2 * arrayLength);
+        arrayLength *= 2;
     }
 
-    element[listSize] = theElement;
-    listSize++;
+    stack[++stackTop] = theElement;
 }
 
 #endif
