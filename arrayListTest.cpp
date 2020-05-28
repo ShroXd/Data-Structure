@@ -7,7 +7,7 @@ int main()
 {
     arrayList<int> myList;
 
-    if (myList.empty())
+    /* if (myList.empty())
     {
         cout << "My list is empty" << endl;
     }
@@ -16,17 +16,25 @@ int main()
         cout << "My list is not empty" << endl;
     }
 
-    cout << "The size of my list is: " << myList.size() << endl;
+    cout << "The size of my list is: " << myList.size() << endl; */
 
     myList.insert(0, 0);
     myList.insert(1, 100);
     myList.insert(2, 200);
-    cout << "The size of my list is: " << myList.size() << endl;
+    // cout << "The size of my list is: " << myList.size() << endl;
+    cout << myList;
 
     myList.erase(1);
     cout << myList;
+    cout << myList;
+    cout << myList;
+    cout << myList;
+    cout << myList;
+    myList.insert(1, 400);
+    myList.insert(1, 400);
+    cout << myList;
 
-    int theIndex = 200;
+    /* int theIndex = 200;
     if (myList.indexOf(theIndex) == -1)
     {
         cout << "未找到相关元素";
@@ -34,5 +42,5 @@ int main()
     else
     {
         cout << myList.indexOf(theIndex);
-    }
+    } */
 }
