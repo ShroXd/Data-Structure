@@ -11,7 +11,6 @@ using namespace std;
 template <class T>
 class arrayStack : public stack<T>
 {
-
     template <class U>
     friend ostream &operator<<(ostream &out, const arrayStack<U> &s);
 
@@ -21,6 +20,7 @@ public:
     {
         delete[] stack;
     }
+
     bool empty() const
     {
         return stackTop == -1;
@@ -36,27 +36,25 @@ public:
         {
             throw stackEmpty();
         }
-
         return stack[stackTop];
-    };
+    }
     void pop()
     {
         if (stackTop == -1)
         {
             throw stackEmpty();
         }
-
         stack[stackTop--].~T();
-    };
+    }
     void push(const T &theElement);
 
 private:
     void checkIndex(const int theIndex);
     void checkInitialSize(const int initialSize);
 
+    T *stack;
     int stackTop;
     int arrayLength;
-    T *stack;
 };
 
 template <class T>
@@ -65,8 +63,10 @@ ostream &operator<<(ostream &out, const arrayStack<T> &s)
     out << "The stack is: ";
     for (int i = 0; i <= s.stackTop; i++)
     {
-        out << s.stack[i] << '-';
+        out << s.stack[i] << ' ';
     }
+    out << endl;
+
     return out;
 }
 
@@ -75,7 +75,7 @@ void arrayStack<T>::checkIndex(const int theIndex)
 {
     if (theIndex < 0 || theIndex > stackTop)
     {
-        throw illegalParameterValue("The index of stack must be in [0, listSize - 1]");
+        throw illegalParameterValue("The index of stack must be in [0, stackTop]");
     }
 }
 
