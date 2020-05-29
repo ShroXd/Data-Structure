@@ -36,4 +36,20 @@ private:
     string message;
 };
 
+class queueEmpty
+{
+public:
+    queueEmpty(string theMessage = "stack is empty")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
+
+private:
+    string message;
+};
+
 #endif
