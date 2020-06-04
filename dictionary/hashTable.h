@@ -127,7 +127,9 @@ void hashTable<K, E>::erase(const K& theKey)
     else if (table[b] != NULL && table[b]->first == theKey)
     {
         // 存在数对，且 b 序号就是该数对
-        //? 如何释放空间
+
+        //! 对要删除的元素调用该类型自己的析构函数
+        table[b]->second.~E();
         table[b] = NULL;
         dSize--;
     }
