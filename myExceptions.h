@@ -52,4 +52,36 @@ private:
     string message;
 };
 
+class hashTableFull
+{
+public:
+    hashTableFull(string theMessage = "hash table is full")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
+
+private:
+    string message;
+};
+
+class hashTableElementEmpty
+{
+public:
+    hashTableElementEmpty(string theMessage = "the hash table element is empty")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
+
+private:
+    string message;
+};
+
 #endif
