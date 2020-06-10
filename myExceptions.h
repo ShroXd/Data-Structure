@@ -84,4 +84,20 @@ private:
     string message;
 };
 
+class treeEmpty
+{
+public:
+    treeEmpty(string theMessage = "the tree is empty")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
+
+private:
+    string message;
+};
+
 #endif
