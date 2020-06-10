@@ -1,7 +1,7 @@
 #ifndef dictionary_
 #define dictionary_
 
-#include "../myExceptions.h"
+#include "../lib/myExceptions.h"
 
 template <class K, class E>
 class dictionary

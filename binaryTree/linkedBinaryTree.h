@@ -6,7 +6,7 @@ using namespace std;
 #include <iostream>
 #include "./binaryTree.h"
 #include "../lib/binaryTreeNode.h"
-#include "../myExceptions.h"
+#include "../lib/myExceptions.h"
 
 template <class T>
 class linkedBinaryTree : public binaryTree<binaryTreeNode<T> >

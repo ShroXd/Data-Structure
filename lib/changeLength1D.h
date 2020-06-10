@@ -1,7 +1,7 @@
 #ifndef changeLength1D_
 #define changeLength1D_
 
-#include "../myExceptions.h"
+#include "../lib/myExceptions.h"
 
 using namespace std;
 

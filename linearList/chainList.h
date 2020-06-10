@@ -2,7 +2,7 @@
 #define chainList_
 #include <iostream>
 
-#include "../myExceptions.h"
+#include "../lib/myExceptions.h"
 #include "../lib/chainNode.h"
 #include "./linearList.h"
 

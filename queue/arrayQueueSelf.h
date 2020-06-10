@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "./queue.h"
-#include "../myExceptions.h"
+#include "../lib/myExceptions.h"
 #include "../lib/changeLength1D.h"
 
 using namespace std;

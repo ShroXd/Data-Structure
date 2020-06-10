@@ -4,7 +4,7 @@
 #include <iostream>
 #include "./dictionary.h"
 #include "../lib/hash.h"
-#include "../myExceptions.h"
+#include "../lib/myExceptions.h"
 
 using namespace std;
 
