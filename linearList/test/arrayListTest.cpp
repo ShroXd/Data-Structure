@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./linearList/arrayList.h"
+#include "../arrayList.h"
 
 using namespace std;
 

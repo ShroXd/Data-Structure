@@ -1,11 +1,11 @@
 #include <iostream>
-#include "./queue/chainQueueSelf.h"
+#include "../arrayQueueSelf.h"
 
 using namespace std;
 
 int main()
 {
-    chainQueue<int> s;
+    arrayQueue<int> s;
 
     if (s.empty())
     {
@@ -22,4 +22,6 @@ int main()
     cout << s;
 
     cout << "The back of queue is: " << s.back() << endl;
+
+
 }

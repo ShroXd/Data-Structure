@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./stack/arrayStack.h"
+#include "../arrayStack.h"
 
 using namespace std;
 

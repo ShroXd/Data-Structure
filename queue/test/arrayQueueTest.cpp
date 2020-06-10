@@ -1,11 +1,11 @@
 #include <iostream>
-#include "./queue/arrayQueueSelf.h"
+#include "../arrayQueue.h"
 
 using namespace std;
 
 int main()
 {
-    arrayQueue<int> s;
+    arrayQueue<int> s(2);
 
     if (s.empty())
     {
@@ -21,7 +21,6 @@ int main()
     s.pop();
     cout << s;
 
+    cout << "The front of queue is: " << s.front() << endl;
     cout << "The back of queue is: " << s.back() << endl;
-
-
 }

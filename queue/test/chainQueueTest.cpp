@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./queue/chainQueue.h"
+#include "../chainQueue.h"
 
 using namespace std;
 

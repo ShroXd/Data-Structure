@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./binaryTree/linkedBinaryTree.h"
+#include "../linkedBinaryTree.h"
 
 using namespace std;
 

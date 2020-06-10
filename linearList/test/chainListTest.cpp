@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./linearList/chainList.h"
+#include "../chainList.h"
 
 using namespace std;
 

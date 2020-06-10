@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./dictionary/hashTable.h"
+#include "../hashTable.h"
 
 using namespace std;
 

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./stack/chainStackLast.h"
+#include "../chainStack.h"
 
 using namespace std;
 

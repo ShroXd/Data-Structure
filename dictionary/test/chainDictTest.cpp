@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./dictionary/chainDict.h"
+#include "../chainDict.h"
 
 using namespace std;
 
