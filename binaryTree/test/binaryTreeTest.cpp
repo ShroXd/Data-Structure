@@ -12,4 +12,9 @@ int main()
     z.makeTree(3, x, y);
 
     z.preOrderOutput();     // 3 2 1
+    z.inOrderOutput();      // 3 1 2
+    z.postOrderOutput();    // 1 2 3
+    z.levelOrderOutput();   // 3 2 1
+
+    cout << z.height();
 }
