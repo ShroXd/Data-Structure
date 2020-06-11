@@ -4,6 +4,7 @@
 using namespace std;
 
 #include <iostream>
+#include <queue>
 #include "./binaryTree.h"
 #include "../lib/binaryTreeNode.h"
 #include "../lib/myExceptions.h"
@@ -19,7 +20,7 @@ public:
     }
     ~linkedBinaryTree()
     {
-        cout << "erase()";
+        erase();
     }
 
     bool empty() const
@@ -46,18 +47,72 @@ public:
         cout << endl;
     }
 
+    // 中序遍历
+    void inOrder(void (*theVisit)(binaryTreeNode<T> *))
+    {
+        visit = theVisit;
+        inOrder(root);
+    }
+    void inOrderOutput()
+    {
+        inOrder(output);
+        cout << endl;
+    }
+
+    // 后序遍历
+    void postOrder(void (*theVisit)(binaryTreeNode<T> *))
+    {
+        visit = theVisit;
+        postOrder(root);
+    }
+    void postOrderOutput()
+    {
+        postOrder(output);
+        cout << endl;
+    }
+
+    // 层次遍历
+    void levelOrder(void (*)(binaryTreeNode<T> *));
+    void levelOrderOutput()
+    {
+        levelOrder(output);
+        cout << endl;
+    }
+
+    // 树操作
+    void erase()
+    {
+        postOrder(dispose);
+        root = NULL;
+        treeSize = 0;
+    }
+    int height() const
+    {
+        return height(root);
+    }
+
 protected:
     binaryTreeNode<T> *root;
     int treeSize;
 
     // 函数指针，以便于绑定不同的访问函数
     static void (*visit)(binaryTreeNode<T> *);
+
+    // 遍历的静态函数
     static void preOrder(binaryTreeNode<T> *t);
+    static void inOrder(binaryTreeNode<T> *t);
+    static void postOrder(binaryTreeNode<T> *t);
 
     static void output(binaryTreeNode<T> *t)
     {
         cout << t->element << ' ';
     }
+
+    static void dispose(binaryTreeNode<T> *t)
+    {
+        delete t;
+    }
+    static int height(binaryTreeNode<T>* t);
 };
 
 template <class T>
@@ -86,6 +141,80 @@ void linkedBinaryTree<T>::preOrder(binaryTreeNode<T> *t)
         linkedBinaryTree<T>::visit(t);
         preOrder(t->leftChild);
         preOrder(t->rightChild);
+    }
+}
+
+template <class T>
+void linkedBinaryTree<T>::inOrder(binaryTreeNode<T> *t)
+{
+    if (t != NULL)
+    {
+        inOrder(t->leftChild);
+        linkedBinaryTree<T>::visit(t);
+        inOrder(t->rightChild);
+    }
+}
+
+template <class T>
+void linkedBinaryTree<T>::postOrder(binaryTreeNode<T> *t)
+{
+    if (t != NULL)
+    {
+        postOrder(t->leftChild);
+        postOrder(t->rightChild);
+        linkedBinaryTree<T>::visit(t);
+    }
+}
+
+template <class T>
+void linkedBinaryTree<T>::levelOrder(void (*theVisit)(binaryTreeNode<T> *))
+{
+    queue<binaryTreeNode<T> *> q;
+    binaryTreeNode<T> *t = root;
+
+    while (t != NULL)
+    {
+        theVisit(t);
+
+        // 将该层的元素推入队列
+        // 队列中的元素是按照左右子树，依层级排列下来的
+        if (t->leftChild != NULL)
+        {
+            q.push(t->leftChild);
+        }
+        if (t->rightChild != NULL)
+        {
+            q.push(t->rightChild);
+        }
+
+        if (q.empty())
+        {
+            return;
+        }
+        // 依次从队列中取出
+        t = q.front();
+        q.pop();
+    }
+}
+
+template <class T>
+int linkedBinaryTree<T>::height(binaryTreeNode<T> *t)
+{
+    if (t == NULL)
+    {
+        return 0;
+    }
+
+    int hl = height(t->leftChild);      // height of left
+    int hr = height(t->rightChild);     // height of right
+
+    if (hl > hr)
+    {
+        return ++hl;
+    }
+    else
+    {
+        return ++hr;
     }
 }
 
