@@ -56,13 +56,13 @@ public:
 };
 
 template <class T>
-ostream& operator<<(ostream& out, maxHeap<T>& h)
+ostream &operator<<(ostream &out, maxHeap<T> &h)
 {
     out << "The heap is: ";
 
-    for (int i = 0; i < h.size(); i++)
+    for (int i = 1; i <= h.size(); i++)
     {
-        out << h.heap[i] << ' ';
+        out << i << '-' << h.heap[i] << ' ';
     }
 
     out << endl;
@@ -85,10 +85,10 @@ maxHeap<T>::maxHeap(int initialCapacity)
 }
 
 template <class T>
-void maxHeap<T>::push(const T& theElement)
+void maxHeap<T>::push(const T &theElement)
 {
     // 当数组仅剩下一个空位的时候，是无法构造左子树的
-    if (heapSize = arrayLength - 1)
+    if (heapSize == arrayLength - 1)
     {
         changeLength1D(heap, arrayLength, 2 * arrayLength);
         arrayLength *= 2;
@@ -97,6 +97,8 @@ void maxHeap<T>::push(const T& theElement)
     // 因为 size 比 index 大 1，所以 currentNode 左边有一个空位
     int currentNode = ++heapSize;
 
+    // currentNode 不是根节点
+    // 且父节点元素小于要插入的元素
     while (currentNode != 1 && heap[currentNode / 2] < theElement)
     {
         // 将父节点下移
@@ -110,6 +112,8 @@ void maxHeap<T>::push(const T& theElement)
 template <class T>
 void maxHeap<T>::pop()
 {
+    // 删除根位置的元素
+    // 删除最后一个元素的位置
     if (heapSize == 0)
     {
         throw queueEmpty();
@@ -123,24 +127,64 @@ void maxHeap<T>::pop()
 
     int currentNode = 1, child = 2;
     while (child <= heapSize)
+    // 寻找最后一个元素插入的位置
     {
+        // 按照大根堆的定义，父节点需要大于其任意一个子节点
+        // 所以需要取左右子元素的大者
         if (child < heapSize && heap[child] < heap[child + 1])
         {
             child++;
         }
 
+        // 如果比较大的子元素还大，那么肯定是这个三元素子树的父节点
         if (lastElement >= heap[child])
         {
             break;
         }
-        else
+
+        heap[currentNode] = heap[child];
+        currentNode = child;
+        // 左子树
+        child *= 2;
+    }
+
+    heap[currentNode] = lastElement;
+}
+
+template <class T>
+void maxHeap<T>::initialize(T *theHeap, int theSize)
+{
+    delete[] heap;
+    heap = theHeap;
+    heapSize = theSize;
+
+    // heapSize / 2: 最后一个具有孩子的节点
+    for (int root = heapSize / 2; root >= 1; root--)
+    {
+        T rootElement = heap[root];
+        // 左子元素
+        int child = 2 * root;
+
+        // 可能会有右子元素
+        while (child <= heapSize)
         {
-            heap[currentNode] = heap[child];
-            currentNode = child;
+            if (child < heapSize && heap[child] < heap[child + 1])
+            {
+                child++;
+            }
+
+            // 父元素大于子元素，不移动
+            if (rootElement >= heap[child])
+            {
+                break;
+            }
+
+            // 反之则移动
+            heap[child / 2] = heap[child];
+            //? 单纯为了打破 while？
             child *= 2;
         }
-
-        heap[currentNode] = lastElement;
+        heap[child / 2] = rootElement;
     }
 }
 
