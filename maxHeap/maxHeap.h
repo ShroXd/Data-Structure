@@ -2,7 +2,7 @@
 #define maxHeap_
 
 #include <iostream>
-#include "./maxPriorityQueue.h"
+#include "../virtualClass/maxPriorityQueue.h"
 #include "../lib/changeLength1D.h"
 #include "../lib/myExceptions.h"
 

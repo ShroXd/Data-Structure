@@ -2,7 +2,7 @@
 #define chainDict_
 
 #include <iostream>
-#include "./dictionary.h"
+#include "../virtualClass/dictionary.h"
 #include "../lib/pairNode.h"
 
 using namespace std;

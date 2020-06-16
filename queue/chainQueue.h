@@ -2,7 +2,7 @@
 #define chainQueue_
 
 #include <iostream>
-#include "./queue.h"
+#include "../virtualClass/queue.h"
 #include "../lib/myExceptions.h"
 #include "../lib/chainNode.h"
 

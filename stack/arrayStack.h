@@ -2,7 +2,7 @@
 #define arrayStack_
 
 #include <iostream>
-#include "./stack.h"
+#include "../virtualClass/stack.h"
 #include "../lib/myExceptions.h"
 #include "../lib/changeLength1D.h"
 

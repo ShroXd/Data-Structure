@@ -5,7 +5,7 @@ using namespace std;
 
 #include <iostream>
 #include <queue>
-#include "./binaryTree.h"
+#include "../virtualClass/binaryTree.h"
 #include "../lib/binaryTreeNode.h"
 #include "../lib/myExceptions.h"
 

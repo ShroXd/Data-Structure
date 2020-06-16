@@ -4,7 +4,7 @@
 
 #include "../lib/myExceptions.h"
 #include "../lib/chainNode.h"
-#include "./linearList.h"
+#include "./../virtualClass/linearList.h"
 
 using namespace std;
 

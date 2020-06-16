@@ -2,7 +2,7 @@
 #define hashTable_
 
 #include <iostream>
-#include "./dictionary.h"
+#include "../virtualClass/dictionary.h"
 #include "../lib/hash.h"
 #include "../lib/myExceptions.h"
 

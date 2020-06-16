@@ -2,7 +2,7 @@
 #define chainStackLast_
 
 #include <iostream>
-#include "./stack.h"
+#include "../virtualClass/stack.h"
 #include "../lib/myExceptions.h"
 #include "../lib/chainNode.h"
 

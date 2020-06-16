@@ -2,7 +2,7 @@
 #define arrayList_
 
 #include <iostream>
-#include "linearList.h"
+#include "../virtualClass/linearList.h"
 #include "../lib/myExceptions.h"
 #include "../lib/changeLength1D.h"
 
