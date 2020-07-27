@@ -94,11 +94,13 @@ void maxHeap<T>::push(const T &theElement)
         arrayLength *= 2;
     }
 
-    // 因为 size 比 index 大 1，所以 currentNode 左边有一个空位
+    // 完全二叉树，从左到右依次填充
     int currentNode = ++heapSize;
 
+    // 对新元素执行冒泡比较
     // currentNode 不是根节点
     // 且父节点元素小于要插入的元素
+    // currentNode/2 是父元素，此为完全二叉树的特性
     while (currentNode != 1 && heap[currentNode / 2] < theElement)
     {
         // 将父节点下移
@@ -123,6 +125,8 @@ void maxHeap<T>::pop()
     // 析构根元素
     heap[1].~T();
 
+    // 当根节点删除后，就需要有一个元素补上来，否则就不是完全二叉树了
+    // 因为不管左右元素谁上移，都意味着二叉树中间会有空余
     T lastElement = heap[heapSize--];
 
     int currentNode = 1, child = 2;
@@ -137,11 +141,13 @@ void maxHeap<T>::pop()
         }
 
         // 如果比较大的子元素还大，那么肯定是这个三元素子树的父节点
+        // 找到这个元素应该填充的地方
         if (lastElement >= heap[child])
         {
             break;
         }
 
+        // 当某一分支上的元素上移了，就意味着其原来的位置空出来了，需要按着那条线向下检查
         heap[currentNode] = heap[child];
         currentNode = child;
         // 左子树

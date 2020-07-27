@@ -12,4 +12,5 @@ int main(void)
     h.push(30);
     h.push(5);
     h.preOrderOutput();
+    cout << h.top();
 }

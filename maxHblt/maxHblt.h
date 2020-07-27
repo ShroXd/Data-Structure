@@ -36,15 +36,14 @@ public:
     {
         return treeSize;
     }
-    /* const T &top()
+    const T &top()
     {
         if (treeSize == 0)
         {
             throw queueEmpty();
         }
-        T result = root->element.second;
-        return result;
-    } */
+        return root->element.second;
+    }
     void pop();
     void push(const T &theElement)
     {
